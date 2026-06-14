@@ -25,7 +25,21 @@ Our engineering journey was divided into five distinct architectural phases:
 
 ## 🔍 Core Engineering Gaps & Solutions
 
-During our transition from the initial Proof-of-Concept (PoC) prototype to the live serverless deployment on **Vertex AI Agent Engine**, we identified and filled five critical gaps:
+During our transition from the initial Proof-of-Concept (PoC) prototype to the live serverless deployment on **Vertex AI Agent Engine**, we identified and resolved several critical gaps. The following matrix contrasts the local prototype behavior against our production cloud resolutions:
+
+### 📊 PoC vs. Production Contrast & Resolution Matrix
+
+| Engineering Dimension | Local PoC (Prototype) | Production (Vertex AI Agent Engine) | Operational & Safety Impact |
+| :--- | :--- | :--- | :--- |
+| **Control Flow & Safety** | **Static & Blind**: Executed a sequential script without verifying if previous steps succeeded. | **Stateful Guardrails**: Enforces an `OrchestrationState` tracker, checking execution prerequisites at each turn. | **Zero-Failure Integrity**: Prevents "hallucinated" or unsafe process decisions by ensuring no logistics/DCS swaps trigger without verified physical diagnostics. |
+| **Packaging & Imports** | **Flat File Structure**: All modules in a single local folder; imports resolved locally (`import tools`). | **Absolute Package Paths**: Modularized `deploy_package/` using absolute package paths (`from deploy_package.tools import ...`). | **Container Compliance**: Aligns with the ADK staging directory, where the compiler moves the main app to the root while keeping tools in a subdirectory. |
+| **Compiler Registry** | **Local Execution**: Ran in-memory. | **Convention-Driven Naming**: Named entry point `agent.py` and omitted custom `--adk_app` CLI flags. | **Bug Resolution**: Prevents the ADK compiler from appending duplicate extensions (the `agent.py.py` bug), enabling flawless container registration. |
+| **Dependency Registry** | **Index Starvation**: Defaulted to private registries lacking public packages and secure SSL handshakes. | **Public Index Fallback**: Appended `--extra-index-url` and installed `pyopenssl` for secure GCS uploads. | **Day-1 Provisioning**: Bypasses corporate registry blocks, enabling secure, encrypted cloud staging. |
+| **Mathematical Objectives** | **Flat Scalar Math**: Static equations failing to model real-world wear or redundancy behaviors. | **Physical Realism Curves**: Piecewise availability functions and exponential decay curves ($1.0 - e^{-k \cdot x}$). | **Precision Optimization**: Models catastrophic wear and redundant standby hot-swaps with high fidelity, ensuring the hill-climbing utility is mathematically sound. |
+| **Human Governance** | **Ungoverned Output**: Compiled a flat text block with no verification or security gates. | **Governance Gateway**: Glowing SPA approval modal and **Terminal Scope-Audit** disclosures. | **Human-on-the-Loop**: Eliminates accidental SCADA dispatches; forces operators to audit boundary assumptions before signing off. |
+| **Execution Scaling** | **Synchronous & Local**: Tied to a single local terminal session. | **Serverless Container**: Hosted reasoning engine running on Google Cloud's globally managed stack. | **Enterprise Scaling**: Infinite horizontal scaling, centralized Cloud Logging, and zero-trust IAM security. |
+
+### 🛠️ Gap Breakdown & Solutions
 
 ### 1. Control Flow Gap: Static Script vs. Stateful Guardrails
 *   **The Gap in PoC**: The prototype used a hardcoded, sequential Python control flow. It assumed every step would succeed and lacked any verification. In a real plant, if a logistics database query fails or a sensor feed drops, a static script might proceed to recommend unsafe physical operations based on "hallucinated" or unverified data.
