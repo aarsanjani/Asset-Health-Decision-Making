@@ -4,11 +4,11 @@
     "target_asset": "Pump 2A",
     "sustain_mw_output": true,
     "required_capabilities": [
-      "process_redundancy_assessment",
       "load_shedding_simulation",
+      "labor_resource_scheduling",
+      "process_redundancy_assessment",
       "parts_inventory_check",
       "vibration_analysis",
-      "labor_resource_scheduling",
       "thermal_monitoring"
     ],
     "constraints": [
@@ -17,8 +17,8 @@
     ]
   },
   "assembled_team": [
-    "Supply Chain Coordinator",
     "Vibration Specialist",
+    "Supply Chain Coordinator",
     "DCS Control Specialist"
   ],
   "recommended_metrics": {
@@ -32,7 +32,7 @@
       "phase": "Micro-Level Safety Optimum",
       "thought": "Focusing strictly on the MICRO level\u2014the physics and mechanical health of Pump 2A. Must analyze high-frequency vibration telemetry and thermal limits to protect the asset from catastrophic failure. Business and system-level constraints are out of scope for this micro-evaluation.",
       "action": "Vibration Specialist Analysis (Google ADK)",
-      "observation": "**Vibration Diagnostic Report for Pump 2A**\n\n**Asset ID:** Pump 2A\n\n**Overall Assessment:** CRITICAL\n\n**Fault Type:** Outer Race Bearing Defect (Stage 4)\n\n**Key Telemetry Data:**\n*   **Vibration RMS:** 12.8 mm/s\n*   **Vibration Peak:** 4.2 g\n*   **FFT Dominant Frequency:** 120.0 Hz\n*   **Bearing Temperature:** 87.5 \u00b0C\n\n**Estimated Time to Catastrophic Failure:** 36.0 hours\n\n**Recommended Rapid Local Safety Action:** Immediate Emergency Shutdown or Throttle to < 30% load.",
+      "observation": "**Diagnostic Report for Asset: Pump 2A**\n\n**Severity:** CRITICAL\n**Fault Type:** Outer Race Bearing Defect (Stage 4)\n**Estimated Time to Catastrophic Failure:** 36.0 hours\n\n**Detailed Analysis:**\n*   **Vibration RMS:** 12.8 mm/s\n*   **Vibration Peak:** 4.2 g\n*   **FFT Dominant Frequency:** 120.0 Hz\n*   **Bearing Temperature:** 87.5 \u00b0C\n*   An anomaly has been detected, indicating severe degradation.\n\n**Recommendation for Rapid Local Safety Action:**\n*   Immediate Emergency Shutdown or Throttle to < 30% load.",
       "proposed_state": {
         "asset_id": "Pump 2A",
         "operating_load_pct": 0.0,
@@ -78,7 +78,7 @@
       "phase": "Global Optimum",
       "thought": "Transitioning to the MACRO level. We must resolve the critical risk identified in our second reflection. We need to query the plant DCS SCADA systems to check if a redundant standby asset (e.g., Pump 2B) is available to take over the load. If available, we can perform an immediate hot-swap, allowing us to shut down Pump 2A completely (micro risk = 0) while sustaining full plant output (macro OEE = 1.0).",
       "action": "DCS Redundancy & Hot-swap Assessment (Google ADK)",
-      "observation": "For Pump 2A, a redundant standby asset (Pump 2B) is available with a health of 98.5%. A hot-swap sequence is capable, which would take approximately 30 minutes. The primary asset, Pump 2A, currently contributes 250.0 MW.",
+      "observation": "A redundant standby asset, Pump 2B, is available and ready with a health percentage of 98.5%. A hot-swap sequence is capable and would take approximately 30 minutes. The primary asset, Pump 2A, contributes 250.0 MW.",
       "proposed_state": {
         "asset_id": "Pump 2A",
         "operating_load_pct": 0.0,
@@ -106,5 +106,24 @@
     "production_mw": 500.0,
     "maintenance_delay_hours": 36.0,
     "description": "Macro-Level Global Optimum: Initiate hot-swap to standby Pump 2B. Shut down Pump 2A immediately. Repair Pump 2A in 36 hours."
+  },
+  "dual_track_validation_contract": {
+    "defensive_track_micro_dense": [
+      "Throttle Pump 2A to 30% load immediately.",
+      "Monitor bearing temperatures continuously, ensuring stabilization below 70C."
+    ],
+    "positional_track_macro_anchored": [
+      "Initiate the 30-minute hot-swap sequence to standby Pump 2B.",
+      "Shut down Pump 2A completely once Pump 2B assumes full load.",
+      "Schedule certified maintenance crew for tomorrow at 08:00."
+    ]
+  },
+  "terminal_scope_audit_alignment": {
+    "fixed_boundaries": [
+      "Plant Grid Demand constant at 500 MW.",
+      "Auxiliary systems (cooling, switchgear) are 100% operational.",
+      "Regional warehouse lead times are locked."
+    ],
+    "unexamined_variables_note": "Exogenous market demand fluctuations and auxiliary cooling failures were intentionally unexamined."
   }
 }
