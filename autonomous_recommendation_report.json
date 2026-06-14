@@ -1,0 +1,110 @@
+{
+  "parsed_intent": {
+    "original_intent": "Mitigate Pump 2A anomaly while sustaining MW output",
+    "target_asset": "Pump 2A",
+    "sustain_mw_output": true,
+    "required_capabilities": [
+      "process_redundancy_assessment",
+      "load_shedding_simulation",
+      "parts_inventory_check",
+      "vibration_analysis",
+      "labor_resource_scheduling",
+      "thermal_monitoring"
+    ],
+    "constraints": [
+      "Sustain plant Megawatts close to nominal 500MW",
+      "Avoid catastrophic asset destruction"
+    ]
+  },
+  "assembled_team": [
+    "Supply Chain Coordinator",
+    "Vibration Specialist",
+    "DCS Control Specialist"
+  ],
+  "recommended_metrics": {
+    "oee": 1.0,
+    "risk": 0.0,
+    "utility": 1.0
+  },
+  "fcot_iterations": [
+    {
+      "iteration": 1,
+      "phase": "Micro-Level Safety Optimum",
+      "thought": "Focusing strictly on the MICRO level\u2014the physics and mechanical health of Pump 2A. Must analyze high-frequency vibration telemetry and thermal limits to protect the asset from catastrophic failure. Business and system-level constraints are out of scope for this micro-evaluation.",
+      "action": "Vibration Specialist Analysis (Google ADK)",
+      "observation": "**Vibration Diagnostic Report for Pump 2A**\n\n**Asset ID:** Pump 2A\n\n**Overall Assessment:** CRITICAL\n\n**Fault Type:** Outer Race Bearing Defect (Stage 4)\n\n**Key Telemetry Data:**\n*   **Vibration RMS:** 12.8 mm/s\n*   **Vibration Peak:** 4.2 g\n*   **FFT Dominant Frequency:** 120.0 Hz\n*   **Bearing Temperature:** 87.5 \u00b0C\n\n**Estimated Time to Catastrophic Failure:** 36.0 hours\n\n**Recommended Rapid Local Safety Action:** Immediate Emergency Shutdown or Throttle to < 30% load.",
+      "proposed_state": {
+        "asset_id": "Pump 2A",
+        "operating_load_pct": 0.0,
+        "vibration_rms": 0.0,
+        "bearing_temp": 25.0,
+        "redundancy_active": false,
+        "production_mw": 250.0,
+        "maintenance_delay_hours": 0.0,
+        "description": "Micro-Level Local Optimum: Immediate emergency shutdown of Pump 2A to eliminate mechanical risk."
+      },
+      "metrics": {
+        "oee": 0.0,
+        "risk": 0.0,
+        "utility": 0.0
+      },
+      "reflection": "What did we miss regarding OEE and Risk in Iteration 1?\nWe achieved a perfect micro-level safety score (Risk = 0.00), but completely missed the macro-level impact. Shutting down Pump 2A immediately without logistical coordination cuts plant output by 50% (OEE = 0.00). To climb towards a better utility, we must transition to the MESO level\u2014integrating supply chain, parts inventory, and crew schedules to see when we can actually execute a repair, and finding a throttled operational compromise that balances plant output while keeping the pump alive."
+    },
+    {
+      "iteration": 2,
+      "phase": "Operational Compromise",
+      "thought": "Transitioning to the MESO level. We must address the gaps identified in our first reflection. We cannot afford an unscheduled 50% load drop. We must query the supply chain database for parts and labor availability, and calculate a throttled operating state (e.g., 60% load) that buys us time until a scheduled maintenance window, balancing OEE against physical wear.",
+      "action": "Supply Chain ERP & Labor Query (Google ADK)",
+      "observation": "",
+      "proposed_state": {
+        "asset_id": "Pump 2A",
+        "operating_load_pct": 60.0,
+        "vibration_rms": 6.5,
+        "bearing_temp": 68.0,
+        "redundancy_active": false,
+        "production_mw": 400.0,
+        "maintenance_delay_hours": 36.0,
+        "description": "Meso-Level Compromise: Throttle Pump 2A to 60% load, run for 36 hours until scheduled repair."
+      },
+      "metrics": {
+        "oee": 0.38784,
+        "risk": 0.6470934677064585,
+        "utility": -0.25925346770645846
+      },
+      "reflection": "What did we miss regarding OEE and Risk in Iteration 2?\nThe Meso-level compromise improved plant OEE (f_max = 0.39) by keeping the plant at 400MW. However, the safety risk is still unacceptably high (f_min = 0.65). Running a damaged bearing at 6.5 mm/s for 36 hours carries a high cumulative probability of catastrophic failure before the crew arrives. We optimized the logistics, but the physical risk remains. To climb to a globally flawless utility, we must transition to the MACRO level\u2014monitoring plant-wide DCS controls and checking for standby process redundancy to see if we can bypass Pump 2A entirely, restoring 100% capacity at 0% risk."
+    },
+    {
+      "iteration": 3,
+      "phase": "Global Optimum",
+      "thought": "Transitioning to the MACRO level. We must resolve the critical risk identified in our second reflection. We need to query the plant DCS SCADA systems to check if a redundant standby asset (e.g., Pump 2B) is available to take over the load. If available, we can perform an immediate hot-swap, allowing us to shut down Pump 2A completely (micro risk = 0) while sustaining full plant output (macro OEE = 1.0).",
+      "action": "DCS Redundancy & Hot-swap Assessment (Google ADK)",
+      "observation": "For Pump 2A, a redundant standby asset (Pump 2B) is available with a health of 98.5%. A hot-swap sequence is capable, which would take approximately 30 minutes. The primary asset, Pump 2A, currently contributes 250.0 MW.",
+      "proposed_state": {
+        "asset_id": "Pump 2A",
+        "operating_load_pct": 0.0,
+        "vibration_rms": 0.0,
+        "bearing_temp": 25.0,
+        "redundancy_active": true,
+        "production_mw": 500.0,
+        "maintenance_delay_hours": 36.0,
+        "description": "Macro-Level Global Optimum: Initiate hot-swap to standby Pump 2B. Shut down Pump 2A immediately. Repair Pump 2A in 36 hours."
+      },
+      "metrics": {
+        "oee": 1.0,
+        "risk": 0.0,
+        "utility": 1.0
+      },
+      "reflection": "What did we miss regarding OEE and Risk in Iteration 3?\nBy leveraging the plant's DCS process redundancy, we have achieved a flawless global optimum. The Micro, Meso, and Macro objectives are fully balanced and aligned. OEE is fully sustained (f_max = 1.00) at 100% capacity. Safety risk is virtually eliminated (f_min = 0.00) because the damaged Pump 2A is isolated and idle. The Hill-Climbing utility score is maximized at 1.0000. This recommendation is complete and ready for human-on-the-loop sign-off."
+    }
+  ],
+  "recommended_state": {
+    "asset_id": "Pump 2A",
+    "operating_load_pct": 0.0,
+    "vibration_rms": 0.0,
+    "bearing_temp": 25.0,
+    "redundancy_active": true,
+    "production_mw": 500.0,
+    "maintenance_delay_hours": 36.0,
+    "description": "Macro-Level Global Optimum: Initiate hot-swap to standby Pump 2B. Shut down Pump 2A immediately. Repair Pump 2A in 36 hours."
+  }
+}

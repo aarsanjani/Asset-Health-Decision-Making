@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARES - Agentic Ecosystem Sentinel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="glow-bg"></div>
+    
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="main-header">
+            <div class="logo-area">
+                <div class="logo-pulse"></div>
+                <h1>ARES</h1>
+                <span class="logo-subtitle">Asset Recovery & Agentic Ecosystem Sentinel</span>
+            </div>
+            <div class="header-stats">
+                <div class="stat-badge">
+                    <span class="stat-label">System State:</span>
+                    <span class="stat-value text-green" id="system-state">GOVERNED</span>
+                </div>
+                <div class="stat-badge">
+                    <span class="stat-label">Active Agents:</span>
+                    <span class="stat-value" id="active-agents-count">0</span>
+                </div>
+                <div class="stat-badge">
+                    <span class="stat-label">Nominal Plant Load:</span>
+                    <span class="stat-value">500 MW</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <main class="main-content">
+            
+            <!-- LEFT PANEL: CONTROL & TEAM -->
+            <section class="panel control-panel">
+                <div class="panel-header">
+                    <h2>🎯 Operational Control Center</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <label for="intent-input">High-Level Operator Intent</label>
+                        <textarea id="intent-input" placeholder="Enter high-level plant instructions...">Mitigate Pump 2A anomaly while sustaining MW output</textarea>
+                    </div>
+                    
+                    <button id="trigger-btn" class="btn btn-primary">
+                        <span>⚡ Trigger Autonomous Resolution</span>
+                        <div class="btn-shine"></div>
+                    </button>
+
+                    <div class="team-section">
+                        <h3>👥 Assembled Agent Team</h3>
+                        <div class="agent-cards-container" id="agent-team-list">
+                            <div class="empty-state">No active agents. Trigger a goal to assemble the team.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CENTER PANEL: FCOT LOGS & PROGRESSION -->
+            <section class="panel execution-panel">
+                <div class="panel-header">
+                    <h2>🧠 Fractal Chain of Thought (FCoT) Execution Feed</h2>
+                    <span class="live-indicator">LIVE STREAM</span>
+                </div>
+                <div class="panel-body execution-feed" id="execution-feed">
+                    <div class="empty-feed-state">
+                        <div class="brain-icon">🧠</div>
+                        <p>Awaiting intent trigger to initiate iterative reasoning loops...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT PANEL: ANALYTICS & OBJECTIVES -->
+            <section class="panel analytics-panel">
+                <div class="panel-header">
+                    <h2>📊 Dual-Objective Optimization</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="chart-container">
+                        <h3>Hill-Climbing Trajectory</h3>
+                        <div class="trajectory-plot" id="trajectory-plot">
+                            <div class="empty-state">No trajectory data.</div>
+                        </div>
+                    </div>
+
+                    <div class="telemetry-section">
+                        <h3>📟 Plant Telemetry Summary</h3>
+                        <div class="telemetry-grid">
+                            <div class="telemetry-card">
+                                <span class="tel-label">Pump 2A Vibration</span>
+                                <span class="tel-val" id="tel-vibration">--</span>
+                                <span class="tel-unit">mm/s RMS</span>
+                            </div>
+                            <div class="telemetry-card">
+                                <span class="tel-label">Pump 2A Bearing Temp</span>
+                                <span class="tel-val" id="tel-temp">--</span>
+                                <span class="tel-unit">°C</span>
+                            </div>
+                            <div class="telemetry-card">
+                                <span class="tel-label">Net MW Output</span>
+                                <span class="tel-val" id="tel-mw">--</span>
+                                <span class="tel-unit">MW</span>
+                            </div>
+                            <div class="telemetry-card">
+                                <span class="tel-label">Redundancy Status</span>
+                                <span class="tel-val" id="tel-redundancy">--</span>
+                                <span class="tel-unit">Standby Pair</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- GOVERNANCE SIGN-OFF GATEWAY -->
+        <footer class="governance-gateway" id="governance-gateway" style="display: none;">
+            <div class="gov-warning-icon">⚠️</div>
+            <div class="gov-details">
+                <h3>HUMAN-ON-THE-LOOP GOVERNANCE SIGN-OFF REQUIRED</h3>
+                <p id="recommendation-summary">Awaiting recommendation formulation...</p>
+            </div>
+            <div class="gov-actions">
+                <button id="reject-btn" class="btn btn-secondary">Reject & Re-route</button>
+                <button id="approve-btn" class="btn btn-success">
+                    <span>Approve & Deploy Hot-Swap</span>
+                    <div class="btn-shine"></div>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- SUCCESS MODAL -->
+    <div class="modal-backdrop" id="success-modal" style="display: none;">
+        <div class="modal-card">
+            <div class="success-checkmark">
+                <div class="check-icon"></div>
+            </div>
+            <h2>DCS COMMANDS DISPATCHED</h2>
+            <p>The 30-minute hot-swap sequence to standby **Pump 2B** has been successfully authorized and dispatched to the Distributed Control System (DCS).</p>
+            <button id="close-modal-btn" class="btn btn-primary">Acknowledge</button>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
